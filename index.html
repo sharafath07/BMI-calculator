@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="script.js"></script>
+    <header>
+        <p><span>BMI</span> Calculator</p>
+    </header>
+    <main>
+        <p>Enter your weight...</p>
+        <input type="number" placeholder="in kilogram(kg)" class="weight">
+        <p>Enter your height...</p>
+        <input type="number" placeholder="in metre(m)" class="height" onkeydown="toNext()">
+        <button class="btn" onclick="calculateBMI()">Calculate</button>
+        <p class="result"></p>
+    </main>
+</body>
+</html>
