@@ -45,25 +45,34 @@ function calculateBMI() {
             }
         }
 
-        if (BMI>24.9)
+        if (BMI === Infinity)
+            alert('Wrong input')
+        else if (BMI>24.9)
         {
-            if(BMI>30)
-                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.\n It is at obuseweight range.\n Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-            else
-                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.\n It is at overweight range.\n Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
+            if(BMI>30){
+                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
+                resultELement.classList.add('red')
+            } else {
+                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
+                resultELement.classList.add('light-red')
+            }
+        } else if(BMI<18.5) {
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.<br>Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
+            resultELement.classList.add('yellow')
+        } else if (BMI>18.5 && BMI<24.9) {
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
+            resultELement.classList.add('green')
+        } else { 
+            alert('Wrong input')
         }
-        else if(BMI<18.5)
-            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.\n It is at underweight range.\n Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-        else if (BMI>18.5 && BMI<24.9)
-            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.\n It is at healthy weight range.\n Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-        else
-            resultELement.innerHTML = 'Wrong input'
-
         document.querySelector('.btn').innerText = 'Calculated'   
     } else {
         document.querySelector('.btn').innerText = 'Calculate'
         resultELement.innerHTML = ''
+        resultELement.classList.remove('light-red')
+        resultELement.classList.remove('red')
+        resultELement.classList.remove('green')
+        resultELement.classList.remove('yellow')
     }
 
 }
-
