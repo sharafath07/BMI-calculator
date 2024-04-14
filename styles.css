@@ -37,7 +37,7 @@ input{
     font-family: cursive;
     border-radius: 5px;
     border: solid 1px;
-    padding: 1%;
+    padding: 1% 5%;
 }
 .result{
     background-color: transparent;
