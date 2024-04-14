@@ -17,6 +17,11 @@ function calculateBMI() {
     let max ;
     let weightMax ;
     let weightMin ;
+
+    function change() {
+        document.querySelector('.btn').innerText = 'Calculated'   
+        document.querySelector('.btn').classList.add('active-btn')
+    }
     
     if (document.querySelector('.btn').innerText === 'Calculate') {
 
@@ -31,8 +36,6 @@ function calculateBMI() {
             if (min == 18) {
                 break;
             }
-            console.log(`min = ${min}
-            weightmin = ${weightMin}`)
         }
 
         for (weightMax = 1; weightMax < 10000; weightMax++) {
@@ -44,8 +47,6 @@ function calculateBMI() {
                 weightMax -= 2
                 break;
             }
-            console.log(`max = ${max}
-            weightmax = ${weightMax}`)
         }
 
         if (BMI === Infinity || weight === 0 || height === 0)
@@ -55,36 +56,50 @@ function calculateBMI() {
                 if(BMI>30){
                     resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.`;
                     resultELement.classList.add('red')
+                    change()
                 } else {
                     resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.`;
                     resultELement.classList.add('light-red')
+                    change()
                 }
+            } else if (BMI<1) {
+                resultELement.innerHTML = `You're Body Mass Index is less than 1.<br> It is at underweight range.`;
+                resultELement.classList.add('yellow')
             } else if(BMI<18.5) {
                 resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.`;
                 resultELement.classList.add('yellow')
+                change()
             } else if (BMI>18.5 && BMI<24.9) {
                 resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.`;
                 resultELement.classList.add('green')
-            }
+                change()
+            } 
         } else if (BMI>24.9)
         {
             if(BMI>30){
                 resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
                 resultELement.classList.add('red')
+                change()
             } else {
                 resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
                 resultELement.classList.add('light-red')
+                change()
             }
         } else if(BMI<18.5) {
             resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.<br>Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
             resultELement.classList.add('yellow')
+            change()
         } else if (BMI>18.5 && BMI<24.9) {
             resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
             resultELement.classList.add('green')
+            change()
+        } else if (BMI<0) {
+            resultELement.innerHTML = `You're Body Mass Index is less than .<br> It is at underweight range.<br>Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
+            resultELement.classList.add('yellow')
         } else { 
                 alert('Wrong input')
         }
-        document.querySelector('.btn').innerText = 'Calculated'   
+
     } else {
         document.querySelector('.btn').innerText = 'Calculate'
         resultELement.innerHTML = ''
@@ -92,6 +107,7 @@ function calculateBMI() {
         resultELement.classList.remove('red')
         resultELement.classList.remove('green')
         resultELement.classList.remove('yellow')
+        document.querySelector('.btn').classList.remove('active-btn')
     }
 
 }
