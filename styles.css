@@ -5,12 +5,9 @@ span{
 }
 header{
     background-color: aquamarine;
-    
+    margin : -10px -10px 0px -10px;
     border-bottom: solid rgb(209, 209, 209) 5px;
     
-}
-main{
-    margin-top: 180px;
 }
 header p{
     margin: 0;
