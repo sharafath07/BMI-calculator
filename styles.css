@@ -26,13 +26,13 @@ button{
     font-family: Arial, Helvetica, sans-serif;
     border: none;
     border-radius: 5px;
-    padding: 1% 5%;
+    padding: 10px 15px;
 }
 input{
     font-family: cursive;
     border-radius: 5px;
     border: solid 1px;
-    padding: 1% 5%;
+    padding: 10px 15px;
 }
 .result{
     background-color: transparent;
