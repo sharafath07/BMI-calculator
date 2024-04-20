@@ -5,11 +5,9 @@ span{
 }
 header{
     background-color: aquamarine;
-    position: fixed;
-    top: 0;
-    left: 0;
+    
     border-bottom: solid rgb(209, 209, 209) 5px;
-    right: 0;
+    
 }
 main{
     margin-top: 180px;
