@@ -1,20 +1,28 @@
+body{
+    align-items: center;
+}
 span{
-    font-size: 200%;
+    font-size: 150%;
     font-weight: bolder;
     font-family: Arial, Helvetica, sans-serif;
 }
 header{
     background-color: aquamarine;
-    margin : -10px -10px 0px -10px;
+    position: fixed;
+    top: 0;
+    left: 0;
     border-bottom: solid rgb(209, 209, 209) 5px;
-    
+    right: 0;
+}
+main{
+    margin-top: 100px;
 }
 header p{
     margin: 0;
 }
 p{
     text-wrap: nowrap;
-    font-size: 350%;
+    font-size: 250%;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bolder;
 }
@@ -23,17 +31,27 @@ button{
     background-color: blue;
     font-weight: bold;
     cursor: pointer;
+    font-size: 250%;
     font-family: Arial, Helvetica, sans-serif;
     border: none;
     border-radius: 5px;
-    padding: 10px 15px;
+    height: 75px;
 }
 input{
-    font-family: cursive;
+    font-size: 150%;
+    width: 400px;
+    font-family: Arial, Helvetica, sans-serif;
     border-radius: 5px;
     border: solid 1px;
-    padding: 10px 15px;
+    padding: 0px 10px;
+    height: 75px;
 }
+div{
+    display: grid;
+    grid-template-columns: 450px 250px;
+    column-gap: 10px;
+}
+
 .result{
     background-color: transparent;
     width: fit-content;
@@ -56,8 +74,4 @@ input{
 .yellow{
     background-color: rgb(255, 255, 0, .5);
     border: 5px solid yellow;
-}
-.active-btn{
-    color: blue;
-    background-color: aqua;
 }

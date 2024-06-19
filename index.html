@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Sharafath Ahammed V">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="BMI, Body Mass Index, BMI Calculator, Body Mass Index Calculator">
+    <meta name="description" content="An advanced type of Body Mass Index (BMI) Calculator. It gives health weight range belongs to height according to BMI">
     <title>BMI Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -13,8 +18,10 @@
         <p>Enter your weight...</p>
         <input type="number" placeholder="in kilogram(kg)" class="weight">
         <p>Enter your height...</p>
-        <input type="number" placeholder="in metre(m)" class="height" onkeydown="toNext()">
-        <button class="btn" onclick="calculateBMI()">Calculate</button>
+        <div>
+            <input type="number" placeholder="in metre(m)" class="height" onkeydown="toNext()">
+            <button class="btn" onclick="calculateBMI()">Calculate</button>
+        </div>
         <p class="result"></p>
     </main>
 </body>

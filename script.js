@@ -17,11 +17,6 @@ function calculateBMI() {
     let max ;
     let weightMax ;
     let weightMin ;
-
-    function change() {
-        document.querySelector('.btn').innerText = 'Calculated'   
-        document.querySelector('.btn').classList.add('active-btn')
-    }
     
     if (document.querySelector('.btn').innerText === 'Calculate') {
 
@@ -101,14 +96,14 @@ function calculateBMI() {
         }
 
     } else {
-        document.querySelector('.btn').innerText = 'Calculate'
+
         resultELement.innerHTML = ''
         resultELement.classList.remove('light-red')
         resultELement.classList.remove('red')
         resultELement.classList.remove('green')
         resultELement.classList.remove('yellow')
-        document.querySelector('.btn').classList.remove('active-btn')
     }
 
 }
+
 
