@@ -1,10 +1,9 @@
-
 function toNext() {
     if (event.key === 'Enter')
-        calculateBMI()
+        renderResult()
 }
 
-function calculateBMI() {
+function renderResult() {
     const weightElement = document.querySelector('.weight');
     let weight = Number(weightElement.value);
 
@@ -12,98 +11,144 @@ function calculateBMI() {
     let height = Number(heightElement.value);
     const resultELement = document.querySelector('.result');
 
-    let BMI = 0;
-    let min ;
-    let max ;
-    let weightMax ;
-    let weightMin ;
+    let BMI = calculateBMI(weight, height)
+    let min = calculateMinWeight(height)
+    let max = calculateMaxWeight(height)
     
-    if (document.querySelector('.btn').innerText === 'Calculate') {
+    if (BMI === Infinity || weight === 0 || height === 0) {
 
-        BMI = weight/(height*height);
-        BMI = BMI.toFixed(1)
-    
-        for (weightMin = 1; weightMin < 10000; weightMin++) {
+        alert('Wrong input')
 
-            min = weightMin/(height*height);
-            min = min.toFixed(1)
+    } else if (max === 10000 || min === 10000 ) {
 
-            if (min == 18) {
-                break;
-            }
-        }
+        if (BMI>24.9){
 
-        for (weightMax = 1; weightMax < 10000; weightMax++) {
-            
-            max = weightMax/(height*height);
-            max = max.toFixed(1)
-
-            if (max == 25) {
-                weightMax -= 2
-                break;
-            }
-        }
-
-        if (BMI === Infinity || weight === 0 || height === 0)
-            alert('Wrong input')
-        else if (weightMax === 10000 || weightMin === 10000 ) {
-            if (BMI>24.9){
-                if(BMI>30){
-                    resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.`;
-                    resultELement.classList.add('red')
-                    change()
-                } else {
-                    resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.`;
-                    resultELement.classList.add('light-red')
-                    change()
-                }
-            } else if (BMI<1) {
-                resultELement.innerHTML = `You're Body Mass Index is less than 1.<br> It is at underweight range.`;
-                resultELement.classList.add('yellow')
-            } else if(BMI<18.5) {
-                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.`;
-                resultELement.classList.add('yellow')
-                change()
-            } else if (BMI>18.5 && BMI<24.9) {
-                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.`;
-                resultELement.classList.add('green')
-                change()
-            } 
-        } else if (BMI>24.9)
-        {
             if(BMI>30){
-                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-                resultELement.classList.add('red')
-                change()
+
+                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.`;
+                classAdding('red')
+                
             } else {
-                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-                resultELement.classList.add('light-red')
-                change()
+
+                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.`;
+                classAdding('light-red')
+                
             }
+
+        } else if (BMI<1) {
+
+            resultELement.innerHTML = `You're Body Mass Index is less than 1.<br> It is at underweight range.`;
+            classAdding('yellow')
+
         } else if(BMI<18.5) {
-            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.<br>Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-            resultELement.classList.add('yellow')
-            change()
-        } else if (BMI>18.5 && BMI<24.9) {
-            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.<br> Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-            resultELement.classList.add('green')
-            change()
-        } else if (BMI<0) {
-            resultELement.innerHTML = `You're Body Mass Index is less than .<br> It is at underweight range.<br>Your healthy weight range is between  ${weightMin} kg and ${weightMax} kg`;
-            resultELement.classList.add('yellow')
-        } else { 
-                alert('Wrong input')
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.`;
+            classAdding('yellow')
+            
+        } else if (BMI>=18.5 && BMI<=24.9) {
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.`;
+            classAdding('green')
+
+        } 
+
+    } else if (BMI>24.9) {
+
+        if(BMI>30){
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.<br> Your healthy weight range is between  ${min} kg and ${max} kg`;
+            classAdding('red')
+            
+        } else {
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.<br> Your healthy weight range is between  ${min} kg and ${max} kg`;
+            classAdding('light-red')
+            
         }
 
-    } else {
+    } else if(BMI<18.5) {
 
-        resultELement.innerHTML = ''
+        resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.<br>Your healthy weight range is between  ${min} kg and ${max} kg`;
+        classAdding('yellow')
+        
+    } else if (BMI>=18.5 && BMI<=24.9) {
+
+        resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.<br> Your healthy weight range is between  ${min} kg and ${max} kg`;
+        classAdding('green')
+        
+    } else if (BMI<0) {
+
+        resultELement.innerHTML = `You're Body Mass Index is less than 0.<br> It is at underweight range.<br>Your healthy weight range is between  ${min} kg and ${max} kg`;
+        classAdding('yellow')
+
+    }
+}
+
+function calculateBMI(weight, height) {
+    let BMI = 0
+
+    BMI = weight/(height*height);
+    BMI = BMI.toFixed(1)
+
+    return BMI
+}
+
+function calculateMinWeight(height) {
+
+    let min
+
+    let j = 1
+    while (j < 1000) {
+        min = calculateBMI(j, height)
+
+        if (min >= 18.5) {
+            return j.toFixed(2)
+        }
+
+        j += 0.01
+    }
+}
+
+function calculateMaxWeight(height) {
+
+    let max
+
+    let i = 1000
+    while (i > 1) {
+        max = calculateBMI(i, height)
+
+        if (max <= 24.9) {
+            return i.toFixed(2)
+        }
+
+        i -= 0.01
+    }
+}
+
+function classAdding(name) {
+
+    const resultELement = document.querySelector('.result');
+
+    if (name === 'red') {
+        resultELement.classList.remove('light-red')
+        resultELement.classList.remove('yellow')
+        resultELement.classList.remove('green')
+        resultELement.classList.add('red')
+    } else if (name === 'light-red') {
+        resultELement.classList.remove('red')
+        resultELement.classList.remove('yellow')
+        resultELement.classList.remove('green')
+        resultELement.classList.add('light-red')
+    } else if (name === 'green') {
+        resultELement.classList.remove('light-red')
+        resultELement.classList.remove('yellow')
+        resultELement.classList.remove('red')
+        resultELement.classList.add('green')
+    } else if (name === 'yellow') {
         resultELement.classList.remove('light-red')
         resultELement.classList.remove('red')
         resultELement.classList.remove('green')
-        resultELement.classList.remove('yellow')
+        resultELement.classList.add('yellow')
     }
-
 }
-
 
