@@ -12,17 +12,15 @@
 <body>
     <header>
         <p><span>BMI</span> Calculator</p>
+        <div class="right-side">
+            <button class="nav standard" onclick="renderHTML('standard')">Standard</button>
+            <button class="nav metric" onclick="renderHTML('metric')">Metric</button>
+        </div>
     </header>
     <main>
-        <p>Enter your weight...</p>
-        <input type="number" placeholder="in kilogram(kg)" class="weight">
-        <p>Enter your height...</p>
-        <div>
-            <input type="number" placeholder="in metre(m)" class="height" onkeydown="toNext()">
-            <button class="btn" onclick="renderResult()">Calculate</button>
-        </div>
-        <p class="result"></p>
-    <script src="script.js"></script>
+        
     </main>
+
+    <script src="script.js"></script>
 </body>
 </html>

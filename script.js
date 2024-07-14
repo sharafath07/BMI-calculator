@@ -1,9 +1,46 @@
-function toNext() {
+renderHTML('metric')
+
+function toNext(type) {
     if (event.key === 'Enter')
-        renderResult()
+        renderResult(type)
 }
 
-function renderResult() {
+function renderHTML(type) {
+    const main = document.querySelector('main')
+    let html
+
+    if (type === 'metric'){
+        document.querySelector('.standard').classList.add('active')
+        document.querySelector('.metric').classList.remove('active')
+        html = `
+            <p>Enter your weight...</p>
+            <input type="number" placeholder="in kilogram(kg)" class="weight">
+            <p>Enter your height...</p>
+            <div>
+                <input type="number" placeholder="in metre(m)" onkeydown="toNext('metric')" class="height">
+                <button class="btn" onclick="renderResult('metric')">Calculate</button>
+            </div>
+            <p class="result"></p>
+        `
+    } else if (type === 'standard'){
+        document.querySelector('.metric').classList.add('active')
+        document.querySelector('.standard').classList.remove('active')
+        html = `
+            <p>Enter your weight...</p>
+            <input type="number" placeholder="in pound(Ibs)" class="weight">
+            <p>Enter your height...</p>
+            <div>
+                <input type="number" placeholder="in inche(in)" onkeydown="toNext('standard')" class="height">
+                <button class="btn" onclick="renderResult('standard')">Calculate</button>
+            </div>
+            <p class="result"></p>    
+        `
+    }
+    
+    main.innerHTML = html
+}
+
+function renderResult(type) {
     const weightElement = document.querySelector('.weight');
     let weight = Number(weightElement.value);
 
@@ -11,10 +48,25 @@ function renderResult() {
     let height = Number(heightElement.value);
     const resultELement = document.querySelector('.result');
 
-    let BMI = calculateBMI(weight, height)
-    let min = calculateMinWeight(height)
-    let max = calculateMaxWeight(height)
+    if (type === 'metric') {
+        
+        renderResultForMetric(weight, height, resultELement)
+
+    } else if (type === 'standard') {
+        
+        renderResultForStandard(weight, height, resultELement)
+
+    }
+
     
+}
+
+function renderResultForMetric(weight, height, resultELement){
+    
+    let BMI = calculateBMI('metric',weight, height)
+    let min = calculateMinWeight('metric', height)
+    let max = calculateMaxWeight('metric', height)
+
     if (BMI === Infinity || weight === 0 || height === 0) {
 
         alert('Wrong input')
@@ -82,47 +134,168 @@ function renderResult() {
         classAdding('yellow')
 
     }
+
 }
 
-function calculateBMI(weight, height) {
+function renderResultForStandard(weight, height, resultELement) {
+    BMI = calculateBMI('standard', weight, height)
+    min = calculateMinWeight('standard', height)
+    max = calculateMaxWeight('standard', height)
+
+    if (BMI === Infinity || weight === 0 || height === 0) {
+
+        alert('Wrong input')
+
+    } else if (max === 10000 || min === 10000 || min === 1.00 || max === undefined) {
+
+        if (BMI>24.9){
+
+            if(BMI>30){
+
+                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.`;
+                classAdding('red')
+                
+            } else {
+
+                resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.`;
+                classAdding('light-red')
+                
+            }
+
+        } else if (BMI<1) {
+
+            resultELement.innerHTML = `You're Body Mass Index is less than 1.<br> It is at underweight range.`;
+            classAdding('yellow')
+
+        } else if(BMI<18.5) {
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.`;
+            classAdding('yellow')
+            
+        } else if (BMI>=18.5 && BMI<=24.9) {
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.`;
+            classAdding('green')
+
+        } 
+
+    } else if (BMI>24.9) {
+
+        if(BMI>30){
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at obuseweight range.<br> Your healthy weight range is between  ${min} Ibs and ${max} Ibs`;
+            classAdding('red')
+            
+        } else {
+
+            resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at overweight range.<br> Your healthy weight range is between  ${min} Ibs and ${max} Ibs`;
+            classAdding('light-red')
+            
+        }
+
+    } else if(BMI<18.5) {
+
+        resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at underweight range.<br>Your healthy weight range is between  ${min} Ibs and ${max} Ibs`;
+        classAdding('yellow')
+        
+    } else if (BMI>=18.5 && BMI<=24.9) {
+
+        resultELement.innerHTML = `You're Body Mass Index is ${BMI}.<br> It is at healthy weight range.<br> Your healthy weight range is between  ${min} Ibs and ${max} Ibs`;
+        classAdding('green')
+        
+    } else if (BMI<0) {
+
+        resultELement.innerHTML = `You're Body Mass Index is less than 0.<br> It is at underweight range.<br>Your healthy weight range is between  ${min} Ibs and ${max} Ibs`;
+        classAdding('yellow')
+
+    }
+
+
+}
+
+function calculateBMI(type, weight, height) {
     let BMI = 0
 
-    BMI = weight/(height*height);
-    BMI = BMI.toFixed(1)
+    if (type === 'metric') {
 
-    return BMI
+        BMI = weight/(height*height);
+        BMI = BMI.toFixed(1)
+
+        return BMI
+
+    } else if (type === 'standard'){
+
+        BMI = 703 * (weight/(height*height))
+        BMI = BMI.toFixed(1)
+        
+        return BMI
+    }
 }
 
-function calculateMinWeight(height) {
+function calculateMinWeight(type, height) {
 
     let min
 
-    let j = 1
-    while (j < 1000) {
-        min = calculateBMI(j, height)
+    if (type === 'metric') {
 
-        if (min >= 18.5) {
-            return j.toFixed(2)
+        let j = 1
+        while (j < 1000) {
+            min = calculateBMI('metric', j, height)
+
+            if (min >= 18.5) {
+                return j.toFixed(2)
+            }
+
+            j += 0.01
         }
+    } else if (type === 'standard'){
 
-        j += 0.01
+        let j = 1
+        while (j < 1000) {
+            min = calculateBMI('standard', j, height)
+
+            if (min >= 18.5) {
+                return j.toFixed(2)
+            }
+
+            j += 0.01
+        }
+        
     }
+
+    
 }
 
-function calculateMaxWeight(height) {
+function calculateMaxWeight(type, height) {
 
     let max
 
-    let i = 1000
-    while (i > 1) {
-        max = calculateBMI(i, height)
+    if (type === 'metric') {
+        let i = 1000
+        while (i > 1) {
+            max = calculateBMI('metric', i, height)
 
-        if (max <= 24.9) {
-            return i.toFixed(2)
+            if (max <= 24.9) {
+                return i.toFixed(2)
+            }
+
+            i -= 0.01
         }
+    } else if (type === 'standard') {
+        let i = 1000
+        while (i > 1) {
+            max = calculateBMI('standard', i, height)
 
-        i -= 0.01
+            if (max <= 24.9) {
+                return i.toFixed(2)
+            }
+
+            i -= 0.01
+        }
+        
     }
+
+    
 }
 
 function classAdding(name) {
@@ -151,4 +324,3 @@ function classAdding(name) {
         resultELement.classList.add('yellow')
     }
 }
-
