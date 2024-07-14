@@ -71,7 +71,7 @@ function renderResultForMetric(weight, height, resultELement){
 
         alert('Wrong input')
 
-    } else if (max === 10000 || min === 10000 ) {
+    } else if (max === '10000.00' || min === '10000.00' ) {
 
         if (BMI>24.9){
 
@@ -146,7 +146,7 @@ function renderResultForStandard(weight, height, resultELement) {
 
         alert('Wrong input')
 
-    } else if (max === 10000 || min === 10000 || min === 1.00 || max === undefined) {
+    } else if (max === '10000.00' || min === '10000.00') {
 
         if (BMI>24.9){
 
@@ -239,7 +239,7 @@ function calculateMinWeight(type, height) {
     if (type === 'metric') {
 
         let j = 1
-        while (j < 1000) {
+        while (j < 10000) {
             min = calculateBMI('metric', j, height)
 
             if (min >= 18.5) {
@@ -251,7 +251,7 @@ function calculateMinWeight(type, height) {
     } else if (type === 'standard'){
 
         let j = 1
-        while (j < 1000) {
+        while (j < 10000) {
             min = calculateBMI('standard', j, height)
 
             if (min >= 18.5) {
@@ -271,7 +271,7 @@ function calculateMaxWeight(type, height) {
     let max
 
     if (type === 'metric') {
-        let i = 1000
+        let i = 10000
         while (i > 1) {
             max = calculateBMI('metric', i, height)
 
@@ -282,7 +282,7 @@ function calculateMaxWeight(type, height) {
             i -= 0.01
         }
     } else if (type === 'standard') {
-        let i = 1000
+        let i = 10000
         while (i > 1) {
             max = calculateBMI('standard', i, height)
 
